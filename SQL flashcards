@@ -1,0 +1,1347 @@
+Two required ingredients for a query:
+
+SELECT and FROM
+
+
+
+What is a requirement about SELECT and FROM in a query?
+
+They need to be in the order SELECT, FROM.
+
+
+
+What does SELECT do?
+
+Indicates which columns you would like to view
+
+
+
+What does FROM do?
+
+Identifies the tables the columns are in
+
+What statement identifies what Columns you would like to view?
+SELECT
+
+What statement identifies the tables the columns are in?
+FROM
+
+Where do you put commas in your SELECT query?
+
+Between columns you want to view, but not after the last one.
+
+
+
+What character do you use if you want to select every column in a query?
+
+*
+
+
+What do you get back when you run a query?
+
+A table.
+
+
+Do SELECT statements change anything about the underlying DB?
+
+No.
+
+
+If you have space in column names, how must you refer to them in a query?
+
+With double quotes.
+
+
+What command constrains the returned table to a certain number of rows?
+
+LIMIT
+
+
+In what order to WHERE; SELECT; and FROM clauses have to be?
+
+SELECT, FROM, WHERE
+
+
+What does the WHERE clause do?
+
+Only returns results where its condition is true.
+
+
+What is different about rows in SQL than from Excel?
+
+In SQL rows are preserved together, where in Excel you can change them independently.
+
+
+What is the symbol for the ‘equal to’ operator? 
+
+=
+
+
+What are the two symbols for the ‘not equal to’ operator? 
+
+!=   or   <>
+
+
+What is the symbol for the ‘greater than’ operator? 
+
+>
+
+
+What is the symbol for the ‘less than’ operator? 
+
+<
+What is the symbol for the ‘greater than or equal to’ operator? 
+
+>=
+
+
+What is the symbol for the ‘less than or equal to’ operator? 
+
+<=
+
+
+What sort of rows are comparison operators typically used on?
+
+Numerical
+
+
+Do comparison operators work on all kinds of data?
+
+Yes
+
+
+What rule must you follow if the data you are comparing in non numerical?
+
+Put values in ‘single quotes’
+
+
+When does SQL use single quotes (2)?
+
+To reference column names and when you’re comparing non-numerical data. 
+
+
+What happens when you use < or > on non numerical comparisons?
+
+Filter by alphabetical order.  
+
+
+What type of months will WHERE month_name > ‘January’ return?
+
+Months that occur after it in alphabetical order.
+
+---
+Some physical pages here
+----
+
+What does the AND operator do?
+
+Allows you to select only rows that satisfy two conditions.
+
+
+Write a query that shows all results from the billboard_top_100 table from the year 2012 where the rank was less than or equal to 10.
+
+SELECT *
+FROM billboard_top_100
+WHERE year = 2012 AND rand <=10
+
+
+How many times can you use the AND operator in a query?
+
+As many times as you like.
+
+
+How can you make multiple AND operations more readable?
+
+Space them out onto multiple lines.
+
+
+Write a query that surfaces all rows for top-10 hits for which Ludacris is part of the Group. Table is billboard 100. 
+Columns are group, year_rank. Remember case sensitivity, and that Ludacris may be featured in the group (not the only artist). Also, is there something different about a column named group?
+
+SELECT * 
+FROM billboard_100
+WHERE “group” ILIKE ‘%ludacris%’ 
+AND year_rank <=10
+
+
+Write a query that surfaces the top-ranked records in 1990, 2000, and 2010. Table is tutorial.billboard_top_100_year_end. Columns year_rank, year. Table billboard.
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE year_rank = 1 
+AND year IN (1990, 2000, 2010)
+
+Write a query that lists all songs from the 1960’s with “love” in the title. 
+Table billboard, columns: year, song_name
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE year BETWEEN 1960 AND 1969
+AND song_name ILIKE '%love%';
+
+
+What does the logical operator OR do?
+
+Allows you to select rows that satisfy either of two conditions. 
+
+
+Write a query that returns all rows for tio-10 songs that feature either Key Perry or Bon Jovi. 
+Table is tutorial.billboard_top_100_year_end. Columns are year_rank and group.
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE year_rank <= 10
+AND ("group" ILIKE '%Katy Perry%' OR "group" ILIKE '%Bon Jovi%');
+
+
+Write a query that returns all songs with titles that contain the word “California” in either the 1970s or 1990s. Table: tutorial.billboard_top_100_year_end. Columns: song_name, year.
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE song_name ILIKE '%california%'
+AND (year BETWEEN 1970 AND 1979 OR year BETWEEN 1990 AND 1999);
+
+
+Write a query that lists all top-100 recordings feature Dr. Dre before 2001 or after 2009.
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE "group" ILIKE '%Dr. Dre%'
+AND (year < 2001 OR year > 2009);
+
+What does the logical operator NOT do?
+
+Can be put before any conditional statement to select rows for which that statement is false.
+
+
+What sort of row is NOT often used to identify, and what syntax do you need?
+
+Non-null rows, syntax = IS NOT NULL
+
+
+Write a query that returns all rows for songs that were on the charts in 2013 and do not contain the letter "a" 
+Table: billboard. Columns = year, song_name
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE year = 2013
+AND song_name NOT ILIKE '%a%';
+
+
+What does the ORDER BY clause do?
+
+Allows you to reorder results base on the data in one or more columns. 
+
+
+When using ORDER BY, what order is SQL’s default?
+
+Ascending
+
+
+When using ORDER BY, what operator do you need to not use Ascending order?
+
+DESC
+
+
+Write a query that returns all rows from 2012, ordered by song title from Z to A.
+Table: billboard, column: year, song_name
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE year = 2012
+ORDER BY song_name DESC
+
+
+How must columns in the ORDER BY clause be separated?
+
+With commas
+
+
+If you are sorting by multiple rows, to which rows does the DESC operator get applied?
+
+Only the column that precedes it. 
+**Research**
+Rows can’t be seperated, so everything gets ordered by whatever first controls
+**may need more explination, not in cards*
+
+Which is executed first ORDER BY or LIMIT, and why?
+
+ORDER BY is executed first so that you’re not sorting within a subset of the whole table.
+
+
+Write a query that returns all rows from 2010 ordered by rank, with artists ordered alphabetically for each song.
+Table: billboard
+Columns: year, year_rank, artist
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE year = 2010
+ORDER BY year_rank, artist
+
+
+How do you comment a piece of SQL code to the right on a given line?
+
+-- (two dashes)
+
+
+How do you comment a pieces of SQL code across multiple lines?
+
+/* Multiple Lines */
+
+
+Write a query that shows all rows for which T-Pain was a group member, ordered by rank on the charts, from lowest to highest rank (from 100 to 1).
+Table: billboard
+Columns: group, year_rank
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE "group" ILIKE '%t-pain%'
+ORDER BY year_rank DESC;
+
+
+Write a query that returns songs that ranked between 10 and 20 (inclusive) in 1993, 2003, or 2013. Order the results by year and rank.
+Table: billboard
+Columns: group, year_rank
+
+SELECT * 
+FROM tutorial.billboard_top_100_year_end 
+WHERE year_rank BETWEEN 10 AND 20 
+AND year IN (1993, 2003, 2013) 
+ORDER BY year, year_rank 
+
+
+**TODO Research Create Menomic for aggregate functions in SQL**
+COUNT, SUM, MIN, MAX, AVG
+
+What does COUNT do?
+
+Counts number of rows in a particular column. 
+
+
+What sort of columns does COUNT exclude?
+
+Nulls
+
+Can you use COUNT on non-numerical columns?
+
+Yes
+
+What does the AS keyword do?
+
+Creates an alias for a column name. 
+
+Where is the only place in SQL you want to use double quotes?
+Objects: Table or column names
+Naming a column, especially with AS.
+*tell Mode about inconsistency, ANSI *
+
+
+What is the syntax for counting the rows of a column?
+
+COUNT(column_name)
+
+
+What does SUM do?
+
+Totals the values in a given column.
+
+
+Can you use SUM on non-numerical values?
+
+No
+
+
+How do you total the values in a given column?
+With SUM. 
+
+How do you perform an arithmetic across rows?
+
+Simple arithmetic with the columns ie SELECT Column_1 + Columns_2,
+
+
+Can you add columns together with aggregators?
+
+No, they only aggregate vertically.
+
+
+How does SUM treat nulls?
+
+As 0’s.
+
+Write a query to calculate the average opening price (hint: you will need to use both COUNT and SUM, as well as some simple arithmetic.).
+Table:aapl_stock_price
+Columns:open
+
+SELECT SUM(open)/COUNT(open) AS "Average Opening Price"
+FROM tutorial.aapl_historical_stock_price 
+
+
+
+What do MAX and MIN do?
+
+Return the lowest and highest values in a column. 
+
+What command returns the highest value in a column?
+MAX
+
+What command returns the lowest value in a column?
+MIN
+
+Can MAX and MIN be used on non-numerical values?
+
+Yes - alphabetically when strings.
+
+Write query to show What was Apple's lowest stock price (at the time of this data collection)? 
+Table: aaple_stock_price
+Columns: low
+
+SELECT MIN(low)
+FROM tutorial.aapl_historical_stock_price 
+
+Write query to show What was the highest single-day increase in Apple's share value?
+
+SELECT MAX(close-open)
+FROM tutorial.aapl_historical_stock_price 
+
+What does AVG do?
+Calculates the average of a selected group of values.
+
+What is the SQL function to calculate an average of a group?
+AVG
+
+Can AVG be used on non-numerical columns?
+No.
+
+How does AVG treat nulls?
+Ignores them completely
+
+How can you deal with AVG ignoring Nulls?
+Write a statement that changes nulls to 0. 
+
+Write a query that calculates the average daily trade volume for Apple stock.
+SELECT AVG(volume)
+FROM tutorial.aapl_historical_stock_price 
+
+What do you use if you only want to aggregate part of a table?
+GROUP BY
+**might need to update how this question is worded **
+
+
+What does GROUP BY do?
+Separates data into groups which can be aggregated independently of one another.
+
+How do you group by multiple columns? (ex year and month)
+Separate with a comma. GROUP BY year, month
+
+Write a query that Calculate the total number of shares traded each month. Order your results chronologically.
+SELECT year,
+  month,
+  SUM(volume) AS "Total Number of Shares"
+FROM tutorial.aapl_historical_stock_price 
+GROUP BY year, month
+ORDER BY year, month
+
+Does the order of the column names in GROUP BY matter?
+No, results will be the same.
+
+Does GROUP BY year, month do the same thing as GROUP BY month, year
+Yes
+
+Write a query to calculate the average daily price change in Apple stock, grouped by year.
+SELECT year,
+  AVG(close-open) AS "Average Daily Change"
+FROM tutorial.aapl_historical_stock_price 
+GROUP BY year
+ORDER BY year
+
+Write a query that calculates the lowest and highest prices that Apple stock achieved each month.
+SELECT year, 
+  month,
+  MIN(low) AS lowest_price,
+  MAX(high) AS highest_price
+FROM tutorial.aapl_historical_stock_price 
+GROUP BY year, month
+ORDER BY year, month
+
+Does the WHERE clause allow you to filter on aggregate columns?
+No
+
+Put these in order: GROUP BY, SELECT, ORDER BY, FROM, HAVING, WHERE.
+SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY
+
+What does HAVING do?
+Filters a query that has been aggregated.
+
+What command filters a query that has been aggregated?
+HAVING
+
+**might need to add a having example query here, like this: SELECT year, month, SUM(volume) as total_monthly_volume
+FROM tutorial.aapl_historical_stock_price 
+GROUP BY month, year
+HAVING SUM(volume) > 254630800
+ORDER BY year, month
+
+What is the syntax for the HAVING clause?
+HAVING aggregate_function(column_name) logical operator value
+
+**research clause vs keyword
+
+What does DISTINCT do?
+Returns only the unique values in a particular column.
+
+**Do you need to use DISTINCT on each column?
+**No, only once in your select clause. 
+**not sure about this
+
+Write a query that returns the unique values in the year column, in chronological order.
+SELECT DISTINCT year
+FROM tutorial.aapl_historical_stock_price 
+ORDER BY year
+
+
+Write a query that counts the number of unique values in the month column for each year.
+SELECT year, COUNT(DISTINCT month)
+FROM tutorial.aapl_historical_stock_price 
+GROUP BY year
+ORDER BY year
+
+Write a query that separately counts the number of unique values in the month column and the number of unique values in the `year` column.
+SELECT COUNT(DISTINCT year) AS years, 
+  COUNT(DISTINCT month) AS months
+FROM tutorial.aapl_historical_stock_price 
+
+What does the CASE statement do?
+It is SQL’s way of handling if/then logic.
+
+What is the CASE statement followed by?
+At least one pair of WHEN and THEN statements.
+
+How must a CASE statement finish with.
+END
+
+What keyword handles if/then logic in SQL?
+CASE
+
+How do you tell SQL to use null if your case statement doesn’t hit any of the logical operators?
+ELSE NULL
+
+Explain this CASE statement in regular english.
+SELECT player_name, year,
+  CASE WHEN year = 'SR' THEN 'yes'
+  ELSE NULL END AS is_a_senior
+FROM benn.college_football_players 
+
+The case statement checks to see if each row makes the conditional statment year=SR True. For any given row if it is true the word ‘yes’ gets printed in that column that we named is_a_senior. For any row where the conditional statement is false elave a null value in the is_a_senior column.
+
+
+Write a query that includes a column that is flagged "yes" when a player is from California, and sort the results with those players first.
+SELECT player_name, 
+  CASE WHEN state = 'CA' THEN 'yes' 
+  ELSE NULL END AS from_CA 
+FROM benn.college_football_players 
+ORDER BY from_CA 
+
+When ordering by a non-numerical column do words come first or Nulls?
+Words. 
+
+How do you write multiple case statements?
+CASE WHEN condition THEN result
+	WHEN condition THEN result
+	ELSE result END AS name_of_column
+
+In what order do the case statements get evaluated, why does it matter?
+Order they are written, first one to be true executes.
+
+72.5 is the average height for a football player. Write a query with a column marking them as above, below or average height.
+SELECT player_name,
+  CASE WHEN height > 72.5 THEN 'Yes'
+    WHEN height < 72.5 THEN 'No'
+    WHEN height = 72.5 THEN 'Average'
+    END AS taller_than_average
+FROM benn.college_football_players
+
+**TODO need to learn to do this without the number and just the average**
+
+Where does the CASE statement always go?
+In the SELECT clause
+
+What 3 components + 1 optional component does a CASE statement contain?
+WHEN, THEN, END. + ELSE
+
+
+Write a query that counts the number of 300lb+ players for each of the following regions: West Coast (CA, OR, WA), Texas, and Other (Everywhere else).
+SELECT CASE WHEN state IN ('CA', 'OR', 'WA') THEN 'West Coast'
+            WHEN state = 'TX' THEN 'Texas'
+            ELSE 'Other' END AS big_player_region,
+            COUNT(1) AS players
+    FROM benn.college_football_players
+    WHERE weight >= 300
+    GROUP BY 1
+
+Write a query that calculates the combined weight of all underclass players (FR/SO) in California as well as the combined weight of all upperclass players (JR/SR) in California.
+SELECT CASE WHEN year = 'FR' OR year = 'SO' THEN 'underclass'
+            WHEN year = 'JR' OR year = 'SR' THEN 'upperclass'
+            ELSE NULL END AS class_group,
+        SUM(weight) AS combined_player_weight
+    FROM benn.college_football_players 
+  WHERE state = 'CA'
+  GROUP BY 1
+
+Take this query and reorient it horizontally:
+SELECT CASE WHEN year = 'FR' THEN 'FR'
+            WHEN year = 'SO' THEN 'SO'
+            WHEN year = 'JR' THEN 'JR'
+            WHEN year = 'SR' THEN 'SR'
+            ELSE 'No Year Data' END AS year_group,
+            COUNT(1) AS count
+  FROM benn.college_football_players
+ GROUP BY 1
+
+And re-orient it horizontally:
+SELECT COUNT(CASE WHEN year = 'FR' THEN 1 ELSE NULL END) AS fr_count,
+       COUNT(CASE WHEN year = 'SO' THEN 1 ELSE NULL END) AS so_count,
+       COUNT(CASE WHEN year = 'JR' THEN 1 ELSE NULL END) AS jr_count,
+       COUNT(CASE WHEN year = 'SR' THEN 1 ELSE NULL END) AS sr_count
+  FROM benn.college_football_players
+
+
+Write a query that displays the number of players in each state, with FR, SO, JR, and SR players in separate columns and another column for the total number of players. Order results such that states with the most players come first.
+SELECT state,
+  COUNT(CASE WHEN year = 'FR' THEN 1 ELSE NULL END) as freshmen,
+  COUNT(CASE WHEN year = 'SO' THEN 1 ELSE NULL END) as sophmores,
+  COUNT(CASE WHEN year = 'JR' THEN 1 ELSE NULL END) as juniors,
+  COUNT(CASE WHEN year = 'SR' THEN 1 ELSE NULL END) as seniors,
+  COUNT(id) AS total_players
+FROM benn.college_football_players
+GROUP BY state
+ORDER BY total_players DESC
+
+Write a query that shows the number of players at schools with names that start with A through M, and the number at schools with names starting with N - Z.
+SELECT COUNT(CASE WHEN school_name < 'n' THEN 1 END) AS A_through_M,
+        COUNT(CASE WHEN school_name >= 'n' THEN 1 END) AS N_through_Z
+  FROM benn.college_football_players 
+Or
+SELECT CASE WHEN school_name < 'n' THEN 'A-M'
+            WHEN school_name > 'n' THEN 'N-Z' 
+            ELSE NULL END AS school_name_group,
+      count(1) AS players
+    FROM benn.college_football_players 
+    GROUP BY 1
+
+
+Write a query that selects the school name, player name, position, 
+and weight for every player in Georgia, ordered by weight 
+(heaviest to lightest). Be sure to make an alias for the table, 
+and to reference all column names in relation to the alias.
+
+SELECT players.full_school_name, 
+        players.player_name, 
+        players.position, 
+        players.weight, 
+FROM  benn.college_football_players players
+WHERE players.state = 'GA'
+ORDER BY players.weight DESC;
+
+**imagining aliasing as implicit knowelege for myself
+
+What does ON do?
+Indicates how the two tables you’re joining relate to one another. 
+
+What are the relationships between two databases often referred to as?
+Mappings
+
+What are mappings?
+The relationships between two databases.
+
+What does this mean in plain english:
+ON teams.school_name = players.school_name
+Join all rows from the payers table onto rows in the teams table where the schoo_name field in the players table is equal to the school_name field in the teams table.  
+If there is a match append the second tables columns to that row. 
+
+If you want to see just columns from one of two joined tables, how do you indicate it in a SELECT statement. Use table alias players
+SELECT players.*
+
+How does an INNER JOIN work?
+Eliminates rows from both tables that do not satisfy the joint condition set forth in the ON statement. 
+
+Draw an INNER JOIN Venn Diagram.
+
+
+
+What happens if you join two tables with an identical column name?
+Results can only support one column with a given name. The results will simply show the exact som result set for both columns even if they contain different data.
+
+How do you avoid the problem of having two tables with identical column names?
+Name the columns individually.
+
+Write a query that displays player names, school names and conferences for schools in the "FBS (Division I-A Teams)" division.
+SELECT players.player_name,
+        players.school_name, 
+        teams.conference
+FROM benn.college_football_players players
+JOIN benn.college_football_teams teams
+ON players.school_name = teams.school_name
+WHERE teams.division = 'FBS (Division I-A Teams)'
+
+What aren’t returned when performing an inner join?
+Rows from either table that are not matched on the join.
+
+What is the main attribute of an OUTER JOIN?
+Unmatched rows can be returned
+
+What are the three kinds of OUTER JOINs?
+LEFT JOIN, RIGHT JOIN, FULL OUTTER JOIN
+
+What does a LEFT JOIN do? 
+Returns matched rows and unmatched rows from the left table
+
+What does a RIGHT JOIN do?
+Returns matched rows and unmatched rows from the right table.
+
+What does a FULL OUTER JOIN do?
+Returns all rows from both tables.
+
+Write a query that performs an inner join between the tutorial.crunchbase_acquisitions table and the tutorial.crunchbase_companies table, but instead of listing individual rows, count the number of non-null rows in each table.
+SELECT COUNT(companies.permalink) AS companies_row_count,
+       COUNT(acquisitions.company_permalink) AS acquisitions_row_count
+FROM tutorial.crunchbase_companies companies
+JOIN tutorial.crunchbase_acquisitions acquisitions
+  ON companies.permalink = acquisitions.company_permalink
+
+
+How do you only get values that aren’t NULL.
+IS NOT NULL
+
+Count the number of unique companies (don't double-count companies) and unique acquired companies by state. Do not include results for which there is no state data, and order by the number of acquired companies from highest to lowest.
+SELECT COUNT(DISTINCT companies.name) AS unique_companies,
+       COUNT(DISTINCT acquisitions.company_name) AS unique_acquired_companies,
+       companies.state_code AS state
+FROM tutorial.crunchbase_companies companies
+LEFT JOIN tutorial.crunchbase_acquisitions acquisitions
+  ON companies.permalink = acquisitions.company_permalink
+WHERE companies.state_code IS NOT NULL
+GROUP BY state
+ORDER BY unique_acquired_companies DESC
+
+Why is right join rarely used?
+Because you can achieve the same results by switching the table names and using a left join.
+
+How do you filter results from just one table in a join before the two tables are joined together?
+Using conditional statements in the ON.
+
+If there is a COUNT in the SELECT clause, what has to be true about other rows and why?
+Other rows must be part of a GROUP BY, otherwise there is a disconnect between the aggregating of count and the rows you’re dealing with. 
+
+Write a query that shows a company's name, "status" (found in the Companies table), and the number of unique investors in that company. Order by the number of investors from most to fewest. Limit to only companies in the state of New York.
+SELECT companies.name, 
+       companies.status, 
+       COUNT(DISTINCT investments.investor_permalink) AS number_of_investors
+FROM tutorial.crunchbase_companies companies
+LEFT JOIN tutorial.crunchbase_investments investments
+  ON companies.permalink = investments.company_permalink 
+WHERE companies.state_code = 'NY'
+GROUP BY 1, 2
+ORDER BY 3 DESC
+
+
+Write a query that lists investors based on the number of companies in which they are invested. Include a row for companies with no investor, and order from most companies to least.
+SELECT CASE
+           WHEN investments.investor_name IS NULL THEN 'No Investors'
+           ELSE investments.investor_name
+       END AS company_name,
+       COUNT(DISTINCT companies.name) AS companies_invested_in
+FROM tutorial.crunchbase_companies companies
+LEFT JOIN tutorial.crunchbase_investments investments
+  ON investments.company_permalink = companies.permalink
+GROUP BY 1
+ORDER BY 2 DESC
+
+What does FULL JOIN do?
+Returns unmatched rows from both tables.
+
+Is FULL JOIN used often?
+No.
+
+When is FULL JOIN used?
+In conjunction with aggregations to understand the amount of overlap between two tables.
+
+Write a query that joins tutorial.crunchbase_companies and tutorial.crunchbase_investments_part1 using a FULL JOIN. Count up the number of rows that are matched/unmatched as in the example above.
+SELECT COUNT(CASE
+                 WHEN companies.permalink IS NOT NULL
+                      AND investments.investor_permalink IS NULL THEN companies.permalink
+             END) AS in_companies,
+       COUNT(CASE
+                 WHEN companies.permalink IS NOT NULL
+                      AND investments.investor_permalink IS NOT NULL THEN companies.permalink
+             END) AS in_both,
+       COUNT (CASE
+                  WHEN investments.investor_permalink IS NOT NULL
+                       AND companies.permalink IS NULL THEN investments.investor_permalink
+              END) AS in_investments
+FROM tutorial.crunchbase_companies companies
+FULL JOIN tutorial.crunchbase_investments_part1 investments
+  ON companies.permalink = investments.company_permalink
+
+What does UNION do?
+Allows you to stack one dataset on top of the other.
+Put differently you to write two separate SELECT statements and to have the results of one statement display in the same table as the results from the other statement. 
+
+UNION only appends … values.
+Distinct values. Any reows in the appended table that are exactly identical to rows in the first table are dropped.
+
+How do you UNION two tables without dropping any identical values?
+UNION ALL
+
+What does UNION ALL do?
+Stacks two datasets without dropping any identical rows.
+
+What is more often used, UNION or UNION ALL?
+UNION ALL
+
+What are the two SQL rules for appending UNION data?
+1- Both tables must have the same number of columns.
+2-Columns must have the same data type in the same order as the first table.
+
+Do the column names have to be the same when you’re doing a UNION?
+No, but they typically are.
+
+What are most of the instances where you’d want to use UNION?
+Stitching together different parts of the same dataset.
+
+What is a benefit of having two SELECT statements when you’re UNIONing?
+You can filter them differently using WHERE clauses.
+
+
+Write a query that appends the two crunchbase_investments datasets above (including duplicate values). Filter the first dataset to only companies with names that start with the letter "T", and filter the second to companies names starting with "M" (both not case-sensitive). Only include the company_permalink, company_name, and investor_namecolumns.
+SELECT company_permalink, company_name, investor_name
+FROM tutorial.crunchbase_investments_part1 
+WHERE company_name ILIKE 't%'
+
+UNION ALL
+
+SELECT company_permalink, company_name, investor_name
+FROM tutorial.crunchbase_investments_part2 
+WHERE company_name ILIKE 'm%'
+
+Write a query that shows 3 columns. The first indicates which dataset (part 1 or 2) the data comes from, the second shows company status, and the third is a count of the number of investors. 
+
+Hint: you will have to use the tutorial.crunchbase_companies table as well as the investments tables.
+SELECT 'Part 1' AS which_dataset,
+       companies.status AS company_status,
+       COUNT(DISTINCT investments.investor_permalink) AS number_of_investors
+FROM tutorial.crunchbase_companies companies
+LEFT JOIN tutorial.crunchbase_investments_part1 investments
+  ON companies.permalink = investments.company_permalink
+GROUP BY 1,
+         2
+UNION ALL
+SELECT 'Part 2' AS which_dataset,
+       companies.status AS company_status,
+       COUNT(DISTINCT investments.investor_permalink) AS number_of_investors
+FROM tutorial.crunchbase_companies companies
+LEFT JOIN tutorial.crunchbase_investments_part2 investments
+  ON companies.permalink = investments.company_permalink
+GROUP BY 1,
+         2
+
+Can you use conditional statements with the ON clause?
+Yes
+
+What is the difference between the results of the following statements:
+SELECT companies.permalink,
+       companies.name,
+       companies.status,
+       COUNT(investments.investor_permalink) AS investors
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part1 investments
+    ON companies.permalink = investments.company_permalink
+   AND investments.funded_year > companies.founded_year + 5
+ GROUP BY 1,2, 3
+
+SELECT companies.permalink,
+       companies.name,
+       companies.status,
+       COUNT(investments.investor_permalink) AS investors
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part1 investments
+    ON companies.permalink = investments.company_permalink
+ WHERE investments.funded_year > companies.founded_year + 5
+ GROUP BY 1,2, 3
+
+The first will return everything in the Left column, but only join investments from the right that were made 5 years after the founding of the company. The resulting table will have left hand rows with no investments, etc. 
+
+The second statement, using WHERE will results in a table where only companies that have been invested in 5 years after founding are shown. All of the results will have been invested in and funder 5+ years later.
+
+There are two reasons you might want to join tables on multiple foreign keys. THe first is _____ of results, the second is it may make your query ______.
+
+Accuracy, run faster
+
+When are SQL self joins used?
+To compare values of a column with values of another column in the same table.
+
+What 2 commands could you use to change a column of numbers stored as strings to integers. Or one symbol.
+CAST or CONVERT, ::
+
+What two different syntaxes can you use for converting a column from one data type to another?
+CAST(column_name AS integer) or column_name::integer
+
+What format are dates saved in in SQL?
+YYYY-MM-DD
+
+If you are doing calculations based on a date, what should you cast that column as?
+timestamp
+
+When you subtract one time stamp from another why data type is the result?
+Interval
+
+What data type do you use to manipulate dates?
+Interval
+
+What is the syntax to add a week to a column of dates? A second?
+Almost like plain English. + INTERVAL ‘1 week’ 
++INTERVAL ‘1 second’
+
+What function do you use to access the current time in SQL?
+NOW()
+
+Write a query that counts the number of companies acquired within 3 years, 5 years, and 10 years of being founded (in 3 separate columns). Include a column for total companies acquired as well. Group by category and limit to only rows with a founding date.
+SELECT companies.category_code,
+       COUNT(CASE
+                 WHEN acquired_at_cleaned - companies.founded_at_clean::timestamp <= '3 years' THEN 1
+             ELSE NULL END) AS within_3,
+       COUNT(CASE
+                 WHEN acquired_at_cleaned - companies.founded_at_clean::timestamp <= '5 years' THEN 1
+             ELSE NULL END) AS within_5,
+       COUNT(CASE
+                 WHEN acquired_at_cleaned - companies.founded_at_clean::timestamp <= '10 years' THEN 1
+             ELSE NULL END) AS within_10,
+       COUNT(companies.name) AS total
+FROM tutorial.crunchbase_companies_clean_date companies
+JOIN tutorial.crunchbase_acquisitions_clean_date acquisitions
+  ON companies.permalink = acquisitions.company_permalink
+WHERE founded_at_clean IS NOT NULL
+GROUP BY companies.category_code
+ORDER BY total DESC
+**There is some wonkiness with interval comparison here vs the tutorial. 
+
+What does LEFT do?
+Pulls a certain number of characters from the left side of a value and presents them as a separate string.
+**or number too though, so characters from a value?
+
+WHat is the syntax for the LEFT command?
+LEFT(string, number of characters)
+
+**Suggesting not 10 digit date, but first ten characters contain the date)*
+
+What does Right do, and what is its syntax?
+Pulls a certain number of characters from the right side of a column and presents them as their own string. RIGHT(string, number of characters)
+
+What does the LENGTH function do?
+Returns the number of characters in a string.
+
+What is the syntax to get the number of characters in a string?
+LENGTH(column_with_string)
+
+What does the TRIM function do?
+Removes characters from the beginning and end of a string.
+
+What function removes characters from teh begining and end of a string?
+TRIM
+
+What are the three arguments the TRIM function takes,
+-Where to remove characters from (leading, trailing, both)
+-Specify all characters to be trimmed (any character included in single quotes here)
+-What column to trim with FROM
+
+What does POSITION do?
+Allows you to specify a substring, then returns a numerical value equal to the character number counting from left. Just the first place it appears though.
+
+Is POSITION case sensitive?
+Yes
+
+What is the syntax for POSITION. 
+POSITION(‘A’ IN column) AS a_position
+
+How do you find the position of a character or substring in a column? Include syntax.
+POSITION('character' IN column_name) 
+
+What does the function STRPOS do? 
+Allows you to specify a substring, then returns a numerical value equal to the character number counting from left. Just the first place it appears though.
+
+What is the syntax for STRPOS? 
+STRPOS(column, ‘A’) AS a_position
+
+How do you deal with POSITION and STRPOS being case-sensitive?
+Use the UPPER or LOWER functions.
+
+What does SUBSTR do?
+Allows you to create a substring beginning in the middle of a string. 
+
+What function allows you to create a substring beginning anywhere in the string?
+SUBSTR
+
+What is the syntax for SUBSTR?
+SUBSTR(column, starting character position, number of characters)
+
+Write a query that separates the `location` field into separate fields for latitude and longitude. You can compare your results against the actual `lat` and `lon` fields in the table.
+SELECT lon, lat, CONCAT('(',lat, ' ', lon,')'), location
+FROM tutorial.sf_crime_incidents_2014_01 
+
+*Concat hasn’t been introduced yet*
+
+What does || do?
+Concatenates
+
+What symbol will concatenate multiple values?
+||
+
+Write a query that creates a date column formatted YYYY-MM-DD.
+SELECT date,
+SUBSTR(date,7,4) || '-' || SUBSTR(date,4,2) || '-' || SUBSTR(date,1,2) AS year_month_day
+FROM tutorial.sf_crime_incidents_2014_01
+
+What does LOWER do?
+Force every character in a string to become lower-case.
+
+What command forces every character in a string to become lower-case.
+LOWER
+
+What does UPPER do?
+Forces every character in a string to become upper-case.
+
+What command forces every character in a string to become upper-case.
+UPPER
+
+Write a query that returns the `category` field, but with the first letter capitalized and the rest of the letters in lower-case.
+SELECT UPPER(LEFT(category, 1)) || LOWER(SUBSTR(category,2,LENGTH(category))) as category
+  FROM tutorial.sf_crime_incidents_2014_01
+
+Write a query that creates an accurate timestamp using the date and timecolumns in tutorial.sf_crime_incidents_2014_01. Include a field that is exactly 1 week later as well.
+SELECT 
+       incidnt_num,
+       (SUBSTR(date, 7, 4) || '-' || SUBSTR(date,1,2) || '-' || SUBSTR(date,4,2) || ' ' ||
+       time || ':00')::timestamp as cleaned_timestamp,
+       (SUBSTR(date, 7, 4) || '-' || SUBSTR(date,1,2) || '-' || SUBSTR(date,4,2) || ' ' ||
+       time || ':00')::timestamp + '1 week' as plus_one_week_timestamp
+  FROM tutorial.sf_crime_incidents_2014_01
+
+How can you easily get year, month, day, etc out of a well formatted date?
+EXTRACT(‘interval’ FROM column) 
+
+How do you round a date to the nearest week, year, etc?
+DATE_TRUNC
+
+What is the syntax for DATE_TRUNC?
+DATE_TRUNC(‘interval’, column) 
+
+
+Write a query that counts the number of incidents reported by week. Cast the week as a date to get rid of the hours/minutes/seconds.
+SELECT  
+DATE_TRUNC('week', cleaned_date)::date as week_begining,
+COUNT(*) as incident_count
+FROM tutorial.sf_crime_incidents_cleandate 
+GROUP BY 1
+ORDER BY 1
+
+How do you query the current date?
+SELECT CURRENT_DATE
+
+How do you query the current time?
+SELECT CURRENT_TIME
+
+How do you query the current timestamp?
+SELECT CURRENT_TIMESTAMP
+How can you set your own timezone?
+SELECT CURRENT_TIME AT TIME ZONE ‘PST’
+
+Write a query that shows exactly how long ago each incident was reported. Assume that the dataset is in Pacific Standard Time (UTC - 8).
+SELECT 
+       incidnt_num, category, NOW() AT TIME ZONE 'PST' as now,
+       NOW() AT TIME ZONE 'PST' - cleaned_date AS time_since
+  FROM tutorial.sf_crime_incidents_cleandate 
+
+What does COALESCE do?
+Replaces NULL values.
+
+How do you replace null values in a query?
+COALESCE
+
+What is the syntax for COALESCE?
+SELECT COALESCE(column, ‘What you want here’)
+
+What are other names for subqueries?(2)
+Inner queries, nested queries
+
+How does a subquery run?
+The inner query produces a table, the outer query acts on that table.
+
+Write a query that selects all Warrant Arrests from the tutorial.sf_crime_incidents_2014_01 dataset,
+then wrap it in an outer query that filters out unresolved incidents. 
+SELECT sub.*
+FROM
+  (SELECT *
+   FROM tutorial.sf_crime_incidents_2014_01
+   WHERE descript LIKE 'WARRANT ARREST') sub
+WHERE resolution = 'NONE'
+
+What are some reasons to use subqueries instead of multiple WHERE clauses?
+When you need to aggregate in multiple stages.
+
+/*Write a query that displays the average number of incidents per month, by category.
+Hint: use tutorial.sf_crime_incidents_cleandate to make your life a little easier. */
+SELECT AVG(sub.incident_count) AS average_incidents,
+       sub.category
+FROM
+  (SELECT LEFT(date, 2) AS
+   month,
+          COUNT(incidnt_num) AS incident_count,
+          category
+   FROM tutorial.sf_crime_incidents_cleandate
+   GROUP BY 1,
+            3) sub
+GROUP BY 2
+
+What is the only kind of conditional logical that will work on a subquery containing multiple results?
+IN
+
+Should you include an alias when you write a subquery in a conditional statement? Why or why not?
+No. Because the subquery is treated as an individual value (or set of values in the case of IN) rather than a table)
+
+Write a query that displays all rows from the three categories with the fewest incidents
+Reported.
+SELECT *
+FROM tutorial.sf_crime_incidents_cleandate incidents
+JOIN
+    ( SELECT category,
+             COUNT(incidnt_num)
+   FROM tutorial.sf_crime_incidents_cleandate
+   GROUP BY 1
+   ORDER BY 2 LIMIT 3) sub
+  ON incidents.category = sub.category
+
+Write a query that counts the number of companies founded and acquired by quarter 
+starting in Q1 2012. Create the aggregations in two separate queries, then join them.
+
+SELECT COALESCE(founded.founded_quarter, acquired.acquired_quarter),
+      founded.founded_count,
+      acquired.acquired_count
+FROM(
+  SELECT COUNT(DISTINCT permalink) as founded_count,
+  founded_quarter 
+  FROM tutorial.crunchbase_companies 
+  WHERE founded_quarter >= '2012-Q1'
+  GROUP BY 2
+  ) founded
+
+FULL JOIN (
+  SELECT COUNT(DISTINCT company_permalink) as acquired_count, 
+  acquired_quarter
+  FROM tutorial.crunchbase_acquisitions 
+  WHERE acquired_quarter >= '2012-Q1'
+  GROUP BY 2
+  ) acquired
+
+ON founded.founded_quarter = acquired.acquired_quarter
+*notes: don't need distinct, could left join
+
+Write a query that ranks investors from the combined dataset above 
+by the total number of investments they have made.
+SELECT sub.investor_name, 
+COUNT(sub.company_permalink) as number_of_investments
+  FROM (
+        SELECT *
+          FROM tutorial.crunchbase_investments_part1
+
+         UNION ALL
+
+        SELECT *
+          FROM tutorial.crunchbase_investments_part2
+       ) sub
+GROUP BY 1
+ORDER BY 2 DESC
+
+**resume
+
+/*Write a query that does the same thing as in the previous problem, 
+except only for companies that are still operating. 
+Hint: operating status is in tutorial.crunchbase_companies.*/
+
+SELECT sub.investor_name, 
+COUNT(companies.permalink) as number_of_investments
+  FROM (
+        SELECT *
+          FROM tutorial.crunchbase_investments_part1
+
+         UNION ALL
+
+        SELECT *
+          FROM tutorial.crunchbase_investments_part2
+       ) sub
+  LEFT JOIN tutorial.crunchbase_companies companies
+  ON sub.company_permalink = companies.permalink
+  AND companies.status = 'operating'
+GROUP BY 1
+ORDER BY 2 DESC
+*could have done this with a where clause, may have been simpler*
+*excluded from anki
+
+What does a window function do?
+Performs a calculation across a set of table rows that are somehow related to the current row. Like an aggregate function, but unlike a regular agg function doesn’t cause rows to become grouped into a single output row - the rows retain their separate identities.
+
+How would you have a running total column?
+SELECT duration_seconds,
+       SUM(duration_seconds) OVER (ORDER BY start_time) AS running_total
+  FROM tutorial.dc_bikeshare_q1_2012
+
+How do you designate something as a window function?
+OVER
+
+How would you read this command in plain english?
+SUM(duration_seconds) OVER (ORDER BY start_time) AS running_total
+Take the sume of duration_seconds over the entire result set in order by start time
+
+What command do you use to narrow a window from the entire dataset to individual groups within the dataset?
+PARTITION BY
+
+/*Write a query modification of the above example query that shows the
+duration of each ride as a percentage of the total time accrued by riders from each start_terminal*/
+SELECT start_terminal,
+       SUM(duration_seconds) OVER (PARTITION BY start_terminal) AS start_terminal_total,
+       duration_seconds,
+       duration_seconds / SUM(duration_seconds) OVER (PARTITION BY start_terminal) * 100 AS percentage_duration
+FROM tutorial.dc_bikeshare_q1_2012
+WHERE start_time < '2012-01-08'
+ORDER BY 1,
+         4 DESC
+**slightly modified for card, ignored where and after
+
+What are the 3 ‘usual suspects’ you can apply when using a window function?
+SUM, COUNT, AVG
+
+What does ROW_NUMBER() do?
+Displays the number of a given row (according to the ORDER BY of the window statement)
+
+How would you get the number of a given row in a window statement?
+ROW_NUMBER()
+
+What does RANK() do?
+Doesnt just count rows but unique values. For example, if you were ordering by start_time and had two identical start_times they would both get the same rank.
+Skips number of rows based on same rank, so you could have 1,2,3,4,4,6,7
+
+How would you count unique values in a window, skipping rows when encountering identical values?
+RANK()
+
+What does DENSE_RANK() do?
+Just like rank (counts unique values) but doesnt skips number of rows based on same rank, so you get 1,2,3,4,4,5,6.
+
+What command would you use if you wanted the order of values, but to not skip number of rows based on the same value. So, if there were shared values in the 4th position, you'd get. 1,2,3,4,4,5,6,7.
+DENSE_RANK()
+
+Write a query that shows the 5 longest rides from each starting terminal, ordered by terminal,
+and longest to shortest rides within each terminal. Limit to rides that occurred before Jan. 8, 2012. 
+SELECT *
+FROM
+  (SELECT start_terminal,
+          start_time,
+          duration_seconds AS trip_time,
+          RANK() OVER (PARTITION BY start_terminal
+                       ORDER BY duration_seconds DESC) AS rank_row
+   FROM tutorial.dc_bikeshare_q1_2012
+   WHERE start_time < '2012-01-08') sub
+WHERE sub.rank_row <=5
+
+When you’re writing a date in a conditional, how would you write March 25, 1986?
+‘1986-03-25’
+
+What does NTILE do?
+Identifies what percentile (or quartile, or any other subdivision) a given row falls into.
+
+What is the syntax for NTILE?
+NTILE(# of buckets) OVER (PARTITION BY optional ORDER BY column to compute on)
+
+What command would you use to identify what percentile a given row falls into?
+NTILE
+
+
+What happens when calculating percentage with NTILE on small datasets?
+If you have less than 100 records it doesn't work properly.
+
+
+Write a query that shows only the duration of the trip and the percentile into 
+which that duration falls (across the entire dataset—not partitioned by terminal).
+
+SELECT duration_seconds as duration_of_trip,
+NTILE(100) OVER (ORDER BY duration_seconds) as percentile
+FROM tutorial.dc_bikeshare_q1_2012 
+ORDER BY 1 DESC
+*problem prompt doesn’t include start time*
+
+What commands can you use to compare rows to the preceding or following rows?(2)
+LAG or LEAD
+
+What command looks at the row before the current row?
+LAG
+
+What command looks at the row after the current row?
+LEAD
+
+What is the syntax for LAG or LEAD?
+LAG(column, # of rows away) OVER (must be in window ORDER BY column to act on)
+**need more research
+
+What might be useful if you’re going to use the same window several times in a query?
+Creating an alias.
+
+How do you create a window alias? (syntax) And where does it go?
+WINDOW window_name AS (PARTITION BY grouping_column ORDER BY action_column)
+After the WHERE clause.
+**need more research
+
+What are 3 things that affect query runtime?
+Table size, Joins, Aggregations
+
+
+Reduce Table Size
+Make joins less complicated - better to reduce table size before joining them
+** needs to be more concise, not added
+
+If you’re aggregating and you have a limit clause will it speed up your query?
+No, because LIMIT happens after aggregation.
+
+Where can you put LIMIT to speed up a query that includes aggregation? (for testing only)
+In a subquery.
+
+
+Tune this query:
+SELECT teams.conference AS conference,
+       players.school_name,
+       COUNT(1) AS players
+  FROM benn.college_football_players players
+  JOIN benn.college_football_teams teams
+    ON teams.school_name = players.school_name
+ GROUP BY 1,2
+
+
+SELECT teams.conference,
+       sub.*
+  FROM (
+        SELECT players.school_name,
+               COUNT(*) AS players
+          FROM benn.college_football_players players
+         GROUP BY 1
+       ) sub
+  JOIN benn.college_football_teams teams
+  ON teams.school_name = sub.school_name
+
+What command can you run on your query to get the query plan?
+EXPLAIN
+
+How do you read a query plan?
+From the bottom up. 
+
+TODO pivoting rows to columns
+TODO pivoting columns to rows
+TODO cross join
+TODO creating rows in FROM *very confusing*
+
+Remember to search Research for questions.
